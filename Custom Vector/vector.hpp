@@ -11,7 +11,7 @@ class Vector {
     public:
 
         Vector() = default;
-        
+
         Vector(int s) {
             elem = new T[s];
             size_ = s;
@@ -93,26 +93,10 @@ class Vector {
         const T& operator[](int i) const {
             return elem[i];
         }
-
-        T* begin(){
-            return elem;
-        }
-
-        T* end(){
-            return elem + size_;
-        }
-        int size(){
-            return size_;
-        }
-
-        bool empty(){
-            return size_ == 0;
-        }
-
-        int capacity(){
-            return capacity_;
-        }
         
+        void pop_back(){
+            size_--;
+        }
         void push_back(T element){
             if (size_ == capacity_){
                 int new_cap = (capacity_ == 0) ? 1: capacity_ * 2;
@@ -129,7 +113,7 @@ class Vector {
         }
 
         void reserve(int new_cap){
-            if (new_cap < capacity_){
+            if (new_cap <= capacity_){
                 return;
             }
             T* temp = new T[new_cap];
@@ -141,4 +125,80 @@ class Vector {
             capacity_ = new_cap;
         }
 
+        void erase(int idx){
+            for (int i = idx; i < size_ - 1; ++i){
+                elem[i] = elem[i+1];
+            }
+            size_--;
+        }
+
+        void insert(int idx, T value){
+            if (size_ == capacity_){
+                int new_cap = (capacity_ == 0) ? 1: capacity_ * 2;
+                T* temp = new T[new_cap];
+                for (int i = 0; i < size_; ++i){
+                    temp[i] = elem[i];
+                }
+                delete[] elem;
+                elem = temp;
+                capacity_ = new_cap;
+            }
+            for (int i = size_; i >= idx; --i){
+                if (i == idx){
+                    elem[i] = value;
+                }
+                else{
+                    elem[i] = elem[i-1];
+                }
+            }
+            size_++;
+        }
+
+        void clear(){
+            size_ = 0;
+        }
+        
+        T& front(){
+            return elem[0];
+        }
+
+        const T& front() const{
+            return elem[0];
+        }
+
+        T& back(){
+            return elem[size_ - 1];
+        }
+
+        const T& back() const{
+            return elem[size_ - 1];
+        }
+
+        T* begin(){
+            return elem;
+        }
+        
+        const T* begin() const{
+            return elem;
+        }
+
+        T* end(){
+            return elem + size_;
+        }
+
+        const T* end() const{
+            return elem + size_;
+        }
+        
+        int size() const{
+            return size_;
+        }
+
+        bool empty() const{
+            return size_ == 0;
+        }
+
+        int capacity() const{
+            return capacity_;
+        }
 };
