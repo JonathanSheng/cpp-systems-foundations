@@ -1,5 +1,6 @@
 #include <cstddef>
 #include <initializer_list>
+#include <utility>
 template <typename T>
 
 class Vector {
@@ -97,12 +98,13 @@ class Vector {
         void pop_back(){
             size_--;
         }
+
         void push_back(T element){
             if (size_ == capacity_){
                 int new_cap = (capacity_ == 0) ? 1: capacity_ * 2;
                 T* temp = new T[new_cap];
                 for (int i = 0; i < size_; ++i){
-                    temp[i] = elem[i];
+                    temp[i] = std::move(elem[i]);
                 }
                 delete[] elem;
                 elem = temp;
@@ -118,7 +120,7 @@ class Vector {
             }
             T* temp = new T[new_cap];
             for (int i = 0; i < size_; ++i){
-                temp[i] = elem[i];
+                temp[i] = std::move(elem[i]);
             }
             delete[] elem;
             elem = temp;
@@ -137,7 +139,7 @@ class Vector {
                 int new_cap = (capacity_ == 0) ? 1: capacity_ * 2;
                 T* temp = new T[new_cap];
                 for (int i = 0; i < size_; ++i){
-                    temp[i] = elem[i];
+                    temp[i] = std::move(elem[i]);
                 }
                 delete[] elem;
                 elem = temp;

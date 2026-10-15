@@ -1,5 +1,9 @@
 # Custom Vector Implementation
 
+Improvement:
+There should definitely be a way to avoid default construction, aka creating a `new T[]` with X number of 
+default objects in every slot. Instead, we want to allocate only `size` live objects, and the 
+`capacity - size` are empty slots. Storing the default objects are useless.
 
 
 Notes:
